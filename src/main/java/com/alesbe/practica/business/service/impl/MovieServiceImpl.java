@@ -28,9 +28,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public boolean updateMovie(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateMovie'");
+    public boolean updateMovie(Movie movie) {
+        return this.repository.updateMovie(movie);
     }
 
     @Override

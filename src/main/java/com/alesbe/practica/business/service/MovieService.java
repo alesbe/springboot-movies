@@ -9,7 +9,7 @@ public interface MovieService {
     public List<Movie> getAll();
     public Movie getById(int movieId);
     public boolean insertMovie(Movie movie);
-    public boolean updateMovie(int movieId);
+    public boolean updateMovie(Movie movie);
     public boolean deleteMovie(int movieId);
     public List<Movie> getPaginatedMovies();
     public List<Movie> getSortedByYear();

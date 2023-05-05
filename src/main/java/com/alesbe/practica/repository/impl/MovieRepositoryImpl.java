@@ -69,13 +69,15 @@ public class MovieRepositoryImpl implements MovieRepository {
     @Override
     public boolean insertMovie(Movie movie) {
         try {
-            String sql = "INSERT into imdb.movies VALUES (?, ?, ?, ?, null, ?, null, ?)";
+            String sql = "INSERT into imdb.movies VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             boolean result = DBUtil.insert(connection, sql, Arrays.asList(
                 movie.getId(),
                 movie.getImdbId(),
                 movie.getTitle(),
                 movie.getYear(),
+                movie.getImage(),
                 movie.getRuntime(),
+                movie.getDescription(),
                 movie.getDirectorId()
             ));
 
@@ -87,9 +89,27 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public boolean updateMovie(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateMovie'");
+    public boolean updateMovie(Movie movie) {
+        try {
+            String sql = "UPDATE movies set id = ?, imdb_id = ?, title = ?, year = ?, image = ?, runtime = ?, description = ?, director_id = ? WHERE (id = ?)";
+            int result = DBUtil.update(connection, sql, Arrays.asList(
+                movie.getId(),
+                movie.getImdbId(),
+                movie.getTitle(),
+                movie.getYear(),
+                movie.getImage(),
+                movie.getRuntime(),
+                movie.getDescription(),
+                movie.getDirectorId(),
+
+                movie.getId() // where clause
+            ));
+
+            return (result >= 1) ? true : false; 
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
     }
 
     @Override
