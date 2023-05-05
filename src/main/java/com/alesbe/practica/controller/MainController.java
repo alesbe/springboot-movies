@@ -14,7 +14,8 @@ public class MainController {
     
     @GetMapping("/")
     public String index() {
-        boolean result = movieService.updateMovie(new Movie(224, "tt435fdgg", "test update", 1023, 190, "nm1701024"));
+        boolean result = this.movieService.deleteMovie(224);
+
         if(result) {
             System.out.println("pelicula añadida");
         } else {

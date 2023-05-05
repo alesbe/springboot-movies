@@ -114,8 +114,15 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public boolean deleteMovie(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteMovie'");
+        try {
+            String sql = "DELETE FROM movies WHERE (id = ?)";
+            int result = DBUtil.delete(connection, sql, Arrays.asList(movieId));
+
+            return (result >= 1) ? true : false; 
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
     }
 
     @Override

@@ -34,8 +34,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public boolean deleteMovie(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteMovie'");
+        return this.repository.deleteMovie(movieId);
     }
 
     @Override
