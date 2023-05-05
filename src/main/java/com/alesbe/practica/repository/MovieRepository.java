@@ -13,7 +13,7 @@ public interface MovieRepository {
     public boolean deleteMovie(int movieId);
     public List<Movie> getPaginatedMovies();
     public List<Movie> getSortedByYear();
-    public List<Movie> getTopMovies(int ammount);
+    public List<Movie> getTopMovies(int limit);
     public Movie getByIdWithDirectorName(int movieId);
     public List<Actor> getActoresByMovieId(int movieId);
 }

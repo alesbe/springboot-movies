@@ -159,7 +159,7 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public List<Movie> getTopMovies(int ammount) {
+    public List<Movie> getTopMovies(int limit) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTopMovies'");
     }
