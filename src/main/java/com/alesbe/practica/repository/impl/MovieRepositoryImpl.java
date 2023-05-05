@@ -133,8 +133,29 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public List<Movie> getSortedByYear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSortedByYear'");
+        List<Movie> allMoviesSorted = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM movies ORDER BY year DESC";
+
+            ResultSet resultSet = DBUtil.select(connection, sql, null);
+            while (resultSet.next()) {
+                allMoviesSorted.add(
+                    new Movie(
+                        resultSet.getInt("id"),
+                        resultSet.getString("imdb_id"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("year"),
+                        resultSet.getInt("runtime"),
+                        resultSet.getString("director_id")
+                    )
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+        }
+        
+        return allMoviesSorted;
     }
 
     @Override

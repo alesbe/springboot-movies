@@ -1,5 +1,7 @@
 package com.alesbe.practica.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -14,12 +16,10 @@ public class MainController {
     
     @GetMapping("/")
     public String index() {
-        boolean result = this.movieService.deleteMovie(224);
+        List<Movie> movies = this.movieService.getSortedByYear();
 
-        if(result) {
-            System.out.println("pelicula añadida");
-        } else {
-            System.out.println("no se ha podido :(");
+        for (Movie movie : movies) {
+            System.out.println(movie);
         }
         return "index";
     }

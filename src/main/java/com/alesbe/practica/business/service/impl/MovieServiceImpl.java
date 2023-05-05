@@ -45,8 +45,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getSortedByYear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSortedByYear'");
+        return this.repository.getSortedByYear();
     }
 
     @Override
