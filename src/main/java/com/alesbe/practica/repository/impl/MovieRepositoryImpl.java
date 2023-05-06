@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.alesbe.practica.business.entity.Actor;
+import com.alesbe.practica.business.entity.Director;
 import com.alesbe.practica.business.entity.Movie;
 import com.alesbe.practica.db.DBUtil;
 import com.alesbe.practica.repository.MovieRepository;
@@ -167,11 +168,11 @@ public class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Movie getByIdWithDirectorName(int movieId) {
         try {
-            String sql = "SELECT * FROM movies m join directors d on m.director_id = d.imdb_id where (m.id = ?);";
+            String sql = "SELECT m.*, d.id as dir_id, d.imdb_id as dir_imdb_id, d.name as dir_name, d.birthYear as dir_birthYear, d.deathYear as dir_deathYear FROM movies m join directors d on m.director_id = d.imdb_id where (m.id = ?)";
             ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
 
             while (resultSet.next()) {
-                System.out.println("Director name: " + resultSet.getString("name"));
+                System.out.println("Director name: " + resultSet.getString("dir_name"));
 
                 return new Movie(
                     resultSet.getInt("id"),
@@ -180,6 +181,30 @@ public class MovieRepositoryImpl implements MovieRepository {
                     resultSet.getInt("year"),
                     resultSet.getInt("runtime"),
                     resultSet.getString("director_id")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
+
+        throw new RuntimeException();
+    }
+
+    @Override
+    public Director getDirectorByMovieId(int movieId) {
+        try {
+            String sql = "SELECT d.* FROM directors d join movies m on m.director_id = d.imdb_id where (m.id = ?)";
+            ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
+
+            while (resultSet.next()) {
+
+                return new Director(
+                    resultSet.getInt("id"),
+                    resultSet.getString("imdb_id"),
+                    resultSet.getString("name"),
+                    resultSet.getInt("birthYear"),
+                    resultSet.getInt("deathYear")
                 );
             }
         } catch (Exception e) {

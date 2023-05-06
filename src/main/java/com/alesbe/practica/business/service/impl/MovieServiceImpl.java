@@ -3,6 +3,7 @@ package com.alesbe.practica.business.service.impl;
 import java.util.List;
 
 import com.alesbe.practica.business.entity.Actor;
+import com.alesbe.practica.business.entity.Director;
 import com.alesbe.practica.business.entity.Movie;
 import com.alesbe.practica.business.service.MovieService;
 import com.alesbe.practica.repository.MovieRepository;
@@ -57,6 +58,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getByIdWithDirectorName(int movieId) {
         return this.repository.getByIdWithDirectorName(movieId);
+    }
+
+    @Override
+    public Director getDirectorByMovieId(int movieId) {
+        return this.repository.getDirectorByMovieId(movieId);
     }
 
     @Override

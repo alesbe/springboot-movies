@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 th:text="${movie.getTitle()}"></h1>
+    <div><b>IMDB id: </b><span th:text="${movie.getTitle()}"></span></div>
+    <div><b>Año: </b><span th:text="${movie.getYear()}"></span></div>
+    <div><b>Minutos: </b><span th:text="${movie.getRuntime()}"></span><span></span></div>
+    <div><b>Nombre del director: </b><span th:text="${director.getName()}"></span></div>
+    <div>
+        <h2>Actores</h2>
+        <div th:each="actor,i : ${actores}" th:text="${actor.getName()}"></div>
+    </div>
+    <div>
+        <h2>Acciones</h2>
+        <button>Actualizar</button>
+        <button>Eliminar</button>
+    </div>
+</body>
+</html>
