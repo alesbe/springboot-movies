@@ -16,11 +16,8 @@ public class MainController {
     
     @GetMapping("/")
     public String index() {
-        List<Movie> movies = this.movieService.getSortedByYear();
-
-        for (Movie movie : movies) {
-            System.out.println(movie);
-        }
+        Movie result = this.movieService.getByIdWithDirectorName(1);
+        System.out.println(result);
         return "index";
     }
 }

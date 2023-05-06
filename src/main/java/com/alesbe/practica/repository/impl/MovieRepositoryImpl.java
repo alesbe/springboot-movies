@@ -166,8 +166,28 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Movie getByIdWithDirectorName(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getByIdWithDirectorName'");
+        try {
+            String sql = "SELECT * FROM movies m join directors d on m.director_id = d.imdb_id where (m.id = ?);";
+            ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
+
+            while (resultSet.next()) {
+                System.out.println("Director name: " + resultSet.getString("name"));
+                
+                return new Movie(
+                    resultSet.getInt("id"),
+                    resultSet.getString("imdb_id"),
+                    resultSet.getString("title"),
+                    resultSet.getInt("year"),
+                    resultSet.getInt("runtime"),
+                    resultSet.getString("director_id")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
+
+        throw new RuntimeException();
     }
 
     @Override
