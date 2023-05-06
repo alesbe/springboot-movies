@@ -61,8 +61,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Actor> getActoresByMovieId(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActoresByMovieId'");
+        return this.repository.getActoresByMovieId(movieId);
     }
     
 }

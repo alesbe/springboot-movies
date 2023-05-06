@@ -172,7 +172,7 @@ public class MovieRepositoryImpl implements MovieRepository {
 
             while (resultSet.next()) {
                 System.out.println("Director name: " + resultSet.getString("name"));
-                
+
                 return new Movie(
                     resultSet.getInt("id"),
                     resultSet.getString("imdb_id"),
@@ -192,8 +192,29 @@ public class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public List<Actor> getActoresByMovieId(int movieId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActoresByMovieId'");
+        List<Actor> filteredActors = new ArrayList<>();
+
+        try {
+            String sql = "select a.* from actors a inner join actors_movies am on a.imdb_id = am.actor_id inner join movies m on m.imdb_id = am.movie_id where (m.id = ?);";
+            ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
+
+            while (resultSet.next()) {
+                filteredActors.add(
+                    new Actor(
+                        resultSet.getInt("id"),
+                        resultSet.getString("imdb_id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("birthYear"),
+                        resultSet.getInt("deathYear")
+                    )
+                );
+            }
+
+            return filteredActors;
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
     }
     
 }
