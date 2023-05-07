@@ -21,7 +21,7 @@
 
         <h2>Actores</h2>
         <select class="selector"  th:name="actors" multiple required>
-            <option th:each="actor,i : ${allActors}" th:value="${actor.getId()}" th:text="${actor.getName()}"></option>
+            <option th:each="actor,i : ${allActors}" th:value="${actor.getId()}" th:text="${actor.getName()}" th:selected="${movieActors.contains(actor)}"></option>
         </select>
         <hr>
 

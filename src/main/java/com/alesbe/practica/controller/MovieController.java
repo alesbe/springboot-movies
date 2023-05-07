@@ -34,6 +34,13 @@ public class MovieController {
 
     @PostMapping("/delete")
     public String deleteMovieById(HttpServletRequest httpServletRequest) {
+        
+
+        return "redirect:/movie/" + 1;
+    }
+
+    @PostMapping("/update")
+    public String updateMovieById(HttpServletRequest httpServletRequest) {
         int id = Integer.parseInt(httpServletRequest.getParameter("id"));
         String title = httpServletRequest.getParameter("title");
         int year = Integer.parseInt(httpServletRequest.getParameter("year"));
@@ -50,13 +57,7 @@ public class MovieController {
         for (String actorId : actors) {
             System.out.println(actorId);
         }
-        //System.out.println("[IMDB ID]: " + imdb_id);
-        return "redirect:/movie/" + 1;
-    }
-
-    @PostMapping("/update")
-    public String updateMovieById(Model model, @RequestParam("imdb_id") String imdb_id) {
-        System.out.println("[IMDB ID]: " + imdb_id);
-        return "redirect:/movie/" + 1;
+        
+        return "redirect:/movie/" + id;
     }
 }
