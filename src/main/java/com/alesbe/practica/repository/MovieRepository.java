@@ -17,5 +17,4 @@ public interface MovieRepository {
     public List<Movie> getTopMovies(int limit);
     public Movie getByIdWithDirectorName(int movieId);
     public Director getDirectorByMovieId(int movieId);
-    public List<Actor> getActoresByMovieId(int movieId);
 }
