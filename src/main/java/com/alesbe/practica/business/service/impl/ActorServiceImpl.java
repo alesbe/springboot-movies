@@ -18,7 +18,6 @@ public class ActorServiceImpl implements ActorService{
 
     @Override
     public List<Actor> getActoresByMovieId(int movieId) {
-        return this.repository.getAll();
+        return this.repository.getActoresByMovieId(movieId);
     }
-    
 }

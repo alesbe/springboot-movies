@@ -13,14 +13,15 @@
     <br>
 
     <form action="/movie" method="post">
-        <div><b>IMDB id: </b><input th:value="${movie.getTitle()}"></input></div>
-        <div><b>Año: </b><input th:value="${movie.getYear()}"></input></div>
-        <div><b>Minutos: </b><input th:value="${movie.getRuntime()}"></input><span></span></div>
-        <div><b>Nombre del director: </b><input th:value="${director.getName()}"></input></div>
+        <input th:name="id" th:value="${movie.getId()}" style="display: none;">
+        <div><b>IMDB id: </b><input th:name="title" th:value="${movie.getTitle()}"></input></div>
+        <div><b>Año: </b><input th:name="year" th:value="${movie.getYear()}"></input></div>
+        <div><b>Minutos: </b><input th:name="runtime" th:value="${movie.getRuntime()}"></input><span></span></div>
+        <div><b>Nombre del director: </b><input th:name="name" th:value="${director.getName()}"></input></div>
 
         <h2>Actores</h2>
-        <select class="selector" name="cars" multiple>
-            <option th:each="actor,i : ${actores}" th:value="${actor.getName()}" th:text="${actor.getName()}"></option>
+        <select class="selector"  th:name="actors" multiple required>
+            <option th:each="actor,i : ${allActors}" th:value="${actor.getId()}" th:text="${actor.getName()}"></option>
         </select>
         <hr>
 
