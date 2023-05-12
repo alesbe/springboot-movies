@@ -57,7 +57,6 @@ public class MovieController {
         String[] actors = httpServletRequest.getParameterValues("actors");
 
         Movie updatedMovie = new Movie(id, imdbId, title, year, runtime);
-        System.out.println("SADFSÑLDJFHSADKLJFKLSDFHGKSDFHG");
         updatedMovie.setDirector(this.directorService.getById(directorId));
 
         movieService.updateMovie(updatedMovie);
