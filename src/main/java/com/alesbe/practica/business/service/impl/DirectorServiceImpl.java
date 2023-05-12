@@ -21,4 +21,8 @@ public class DirectorServiceImpl implements DirectorService{
         return this.repository.getById(directorId);
     }
     
+    @Override
+    public Director getDirectorByMovieId(int movieId) {
+        return this.repository.getDirectorByMovieId(movieId);
+    }
 }

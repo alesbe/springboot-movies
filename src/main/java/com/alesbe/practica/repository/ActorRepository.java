@@ -7,4 +7,5 @@ import com.alesbe.practica.business.entity.Actor;
 public interface ActorRepository {
     public List<Actor> getAll();
     public List<Actor> getActoresByMovieId(int movieId);
+    public Actor getActorById(int actorId);
 }

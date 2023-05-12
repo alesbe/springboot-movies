@@ -150,6 +150,34 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
+    public boolean updateMovieActors(int movieId, List<Actor> actors) {
+        String movieImdbId = this.getById(movieId).getImdbId();
+
+        // 1.- Get all actors_movies rows by movieId and delete them
+        try {
+            String sql = "DELETE FROM actors_movies WHERE (movie_id = ?)";
+            int result = DBUtil.delete(connection, sql, Arrays.asList(movieImdbId));
+
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
+
+        // 2.- Insert actors in a for loop until all actors are filled. Get first movieImdbId using movieId.
+        for (Actor actor : actors) {
+            try {
+                String sql = "INSERT INTO actors_movies (movie_id, actor_id) VALUES (?, ?);";
+                boolean result = DBUtil.insert(connection, sql, Arrays.asList(movieImdbId, actor.getImdbId()));
+    
+            } catch (Exception e) {
+                System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+                throw new RuntimeException();
+            }
+        }
+        return true;
+    }
+
+    @Override
     public List<Movie> getPaginatedMovies() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPaginatedMovies'");
@@ -185,29 +213,5 @@ public class MovieRepositoryImpl implements MovieRepository {
     public List<Movie> getTopMovies(int limit) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTopMovies'");
-    }
-
-    @Override
-    public Director getDirectorByMovieId(int movieId) {
-        try {
-            String sql = "SELECT d.* FROM directors d join movies m on m.director_id = d.imdb_id where (m.id = ?)";
-            ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
-
-            while (resultSet.next()) {
-
-                return new Director(
-                    resultSet.getInt("id"),
-                    resultSet.getString("imdb_id"),
-                    resultSet.getString("name"),
-                    resultSet.getInt("birthYear"),
-                    resultSet.getInt("deathYear")
-                );
-            }
-        } catch (Exception e) {
-            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
-            throw new RuntimeException();
-        }
-
-        throw new RuntimeException();
     }
 }

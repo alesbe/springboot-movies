@@ -1,5 +1,6 @@
 package com.alesbe.practica.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alesbe.practica.business.entity.Actor;
+import com.alesbe.practica.business.entity.Director;
 import com.alesbe.practica.business.entity.Movie;
 import com.alesbe.practica.business.service.ActorService;
 import com.alesbe.practica.business.service.DirectorService;
@@ -26,7 +29,61 @@ public class MovieController {
     MovieService movieService = new MovieServiceImpl();
     ActorService actorService = new ActorServiceImpl();
     DirectorService directorService = new DirectorServiceImpl();
-    
+
+    @GetMapping("/new")
+    public String getAddMovie(Model model) {
+        Director emptyDirector = new Director(0, null, null, 0, 0);
+        Movie emptyMovie = new Movie(0, null, null, 0, 0);
+        emptyMovie.setDirector(emptyDirector);
+
+        model.addAttribute("movie", emptyMovie);
+        model.addAttribute("allActors", this.actorService.getAll());
+        model.addAttribute("movieActors", new ArrayList<Movie>());
+        model.addAttribute("director", emptyDirector);
+        model.addAttribute("allDirectors", this.directorService.getAll());
+
+        model.addAttribute("isUpdatingMovie", false);
+
+        return "movie";
+    }
+
+    @PostMapping("/new")
+    public String postAddMovie(HttpServletRequest httpServletRequest) {
+        // Get form parameters
+        // Movie params
+        int id = Integer.parseInt(httpServletRequest.getParameter("id"));
+        String imdbId = httpServletRequest.getParameter("imdbId");
+        String title = httpServletRequest.getParameter("title");
+        int year = Integer.parseInt(httpServletRequest.getParameter("year"));
+        int runtime = Integer.parseInt(httpServletRequest.getParameter("runtime"));
+
+        // Director params
+        int directorId = Integer.parseInt(httpServletRequest.getParameter("directorId"));
+
+        // Actor params
+        String[] actors = httpServletRequest.getParameterValues("actors");
+
+        List<Actor> newActors = new ArrayList<>();
+        for (String actorId : actors) {
+            newActors.add(
+                this.actorService.getActorById(Integer.parseInt(actorId))
+            );
+        }
+
+        // TODO: id es null. hay que hacer que pille la id de la pelicula recien añadida. tiene que ser autoincementable (a una malas trampearlo)
+
+        // Update movie
+        Movie newMovie = new Movie(id, imdbId, title, year, runtime);
+        newMovie.setDirector(this.directorService.getById(directorId));
+
+        this.movieService.insertMovie(newMovie);
+
+        // Update actors
+        this.movieService.updateMovieActors(id, newActors);
+
+        return "redirect:/movie/" + id;
+    }
+
     @GetMapping("{movieId}")
     public String getMovieById(Model model, @PathVariable("movieId") int movieId) {
         model.addAttribute("movie", this.movieService.getById(movieId));
@@ -34,6 +91,9 @@ public class MovieController {
         model.addAttribute("movieActors", this.actorService.getActoresByMovieId(movieId));
         model.addAttribute("director", this.movieService.getById(movieId).getDirector());
         model.addAttribute("allDirectors", this.directorService.getAll());
+
+        model.addAttribute("isUpdatingMovie", true);
+
         return "movie";
     }
 
@@ -47,23 +107,35 @@ public class MovieController {
 
     @PostMapping("/update")
     public String updateMovieById(HttpServletRequest httpServletRequest) {
+        // Get form parameters
+        // Movie params
         int id = Integer.parseInt(httpServletRequest.getParameter("id"));
         String imdbId = httpServletRequest.getParameter("imdbId");
         String title = httpServletRequest.getParameter("title");
         int year = Integer.parseInt(httpServletRequest.getParameter("year"));
         int runtime = Integer.parseInt(httpServletRequest.getParameter("runtime"));
 
+        // Director params
         int directorId = Integer.parseInt(httpServletRequest.getParameter("directorId"));
+
+        // Actor params
         String[] actors = httpServletRequest.getParameterValues("actors");
 
+        List<Actor> updatedActors = new ArrayList<>();
+        for (String actorId : actors) {
+            updatedActors.add(
+                this.actorService.getActorById(Integer.parseInt(actorId))
+            );
+        }
+
+        // Update movie
         Movie updatedMovie = new Movie(id, imdbId, title, year, runtime);
         updatedMovie.setDirector(this.directorService.getById(directorId));
 
-        movieService.updateMovie(updatedMovie);
+        this.movieService.updateMovie(updatedMovie);
 
-        for (String actorId : actors) {
-            System.out.println(actorId);
-        }
+        // Update actors
+        this.movieService.updateMovieActors(id, updatedActors);
 
         return "redirect:/movie/" + id;
     }

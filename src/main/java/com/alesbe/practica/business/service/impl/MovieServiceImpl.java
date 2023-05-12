@@ -39,6 +39,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public boolean updateMovieActors(int movieId, List<Actor> actors) {
+        return this.repository.updateMovieActors(movieId, actors);
+    }
+
+    @Override
     public List<Movie> getPaginatedMovies() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPaginatedMovies'");
@@ -53,10 +58,5 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getTopMovies(int limit) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTopMovies'");
-    }
-
-    @Override
-    public Director getDirectorByMovieId(int movieId) {
-        return this.repository.getDirectorByMovieId(movieId);
     }
 }

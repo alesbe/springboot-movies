@@ -65,5 +65,33 @@ public class ActorRepositoryImpl implements ActorRepository {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public Actor getActorById(int actorId) {
+        try {
+            String sql = """
+                SELECT * FROM actors
+                WHERE (id = ?)
+            """;
+            ResultSet resultSet = DBUtil.select(connection, sql, List.of(actorId));
+
+            while (resultSet.next()) {
+                Actor actor = new Actor(
+                    resultSet.getInt("id"),
+                    resultSet.getString("imdb_id"), 
+                    resultSet.getString("name"),
+                    resultSet.getInt("birthYear"),
+                    resultSet.getInt("deathYear")
+                );
+
+                return actor;
+            }
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
+
+        throw new RuntimeException();
+    }
     
 }
