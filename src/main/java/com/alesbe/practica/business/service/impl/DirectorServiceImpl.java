@@ -15,5 +15,10 @@ public class DirectorServiceImpl implements DirectorService{
     public List<Director> getAll() {
         return this.repository.getAll();
     }
+
+    @Override
+    public Director getById(int directorId) {
+        return this.repository.getById(directorId);
+    }
     
 }

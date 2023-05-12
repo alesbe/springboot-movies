@@ -38,5 +38,35 @@ public class DirectorRepositoryImpl implements DirectorRepository {
         
         return allDirectors;
     }
+
+    @Override
+    public Director getById(int directorId) {
+        try {
+            String sql = """
+                SELECT * FROM directors
+                WHERE (id = ?)
+            """;
+            ResultSet resultSet = DBUtil.select(connection, sql, List.of(directorId));
+
+            while (resultSet.next()) {
+                Director director = new Director(
+                    resultSet.getInt("id"),
+                    resultSet.getString("imdb_id"), 
+                    resultSet.getString("name"),
+                    resultSet.getInt("birthYear"),
+                    resultSet.getInt("deathYear")
+                );
+
+                System.out.println("DIRETORRRRR:" + director);
+
+                return director;
+            }
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+            throw new RuntimeException();
+        }
+
+        throw new RuntimeException();
+    }
     
 }

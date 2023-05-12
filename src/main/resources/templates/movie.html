@@ -22,8 +22,8 @@
         <input th:name="directorImdbId" th:value="${director.getImdb_id()}" style="display: none;">
         <div>
             <b>Nombre del director: </b>
-            <select class="selector" th:name="directorImdbId" required>
-                <option th:each="director,i : ${allDirectors}" th:value="${director.getImdb_id()}" th:text="${director.getName()}"></option>
+            <select class="selector" th:name="directorId" required>
+                <option th:each="director,i : ${allDirectors}" th:value="${director.getId()}" th:text="${director.getName()}" th:selected="(${movie.getDirector().getId() == director.getId()})"></option>
             </select>
         </div>
 

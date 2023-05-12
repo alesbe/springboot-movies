@@ -39,30 +39,33 @@ public class MovieController {
 
     @PostMapping("/delete")
     public String deleteMovieById(HttpServletRequest httpServletRequest) {
-        /*String id = httpServletRequest.getParameter("id");
-        movieService.deleteMovie(Integer.parseInt(id));*/
+        String id = httpServletRequest.getParameter("id");
+        movieService.deleteMovie(Integer.parseInt(id));
 
         return "redirect:/";
     }
 
     @PostMapping("/update")
     public String updateMovieById(HttpServletRequest httpServletRequest) {
-        /*int id = Integer.parseInt(httpServletRequest.getParameter("id"));
+        int id = Integer.parseInt(httpServletRequest.getParameter("id"));
         String imdbId = httpServletRequest.getParameter("imdbId");
         String title = httpServletRequest.getParameter("title");
         int year = Integer.parseInt(httpServletRequest.getParameter("year"));
         int runtime = Integer.parseInt(httpServletRequest.getParameter("runtime"));
 
-        String directorImdbId = httpServletRequest.getParameter("directorImdbId");
+        int directorId = Integer.parseInt(httpServletRequest.getParameter("directorId"));
         String[] actors = httpServletRequest.getParameterValues("actors");
 
         Movie updatedMovie = new Movie(id, imdbId, title, year, runtime);
+        System.out.println("SADFSÑLDJFHSADKLJFKLSDFHGKSDFHG");
+        updatedMovie.setDirector(this.directorService.getById(directorId));
+
         movieService.updateMovie(updatedMovie);
 
         for (String actorId : actors) {
             System.out.println(actorId);
-        }*/
+        }
 
-        return "redirect:/movie/" + 1;
+        return "redirect:/movie/" + id;
     }
 }

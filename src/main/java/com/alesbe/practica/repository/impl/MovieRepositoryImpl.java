@@ -79,7 +79,6 @@ public class MovieRepositoryImpl implements MovieRepository {
                 
                 movie.setDirector(director);
                 
-                System.out.println(movie);
                 return movie;
             }
         } catch (Exception e) {
