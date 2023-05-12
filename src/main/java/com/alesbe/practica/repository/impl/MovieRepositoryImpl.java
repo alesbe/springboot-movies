@@ -31,8 +31,7 @@ public class MovieRepositoryImpl implements MovieRepository {
                         resultSet.getString("imdb_id"),
                         resultSet.getString("title"),
                         resultSet.getInt("year"),
-                        resultSet.getInt("runtime"),
-                        resultSet.getString("director_id")
+                        resultSet.getInt("runtime")
                     )
                 );
             }
@@ -46,18 +45,42 @@ public class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Movie getById(int movieId) {
         try {
-            String sql = "SELECT * FROM movies WHERE (id = ?)";
+            //String sql = "SELECT * FROM movies WHERE (id = ?)";
+            String sql = """
+                SELECT 
+                m.*,
+                d.id AS director_index,
+                d.name AS director_name,
+                d.birthyear AS director_birthyear, 
+                d.deathyear AS director_deathyear 
+                FROM movies m 
+                INNER JOIN directors d ON m.director_id = d.imdb_id
+                WHERE m.id = ?
+            """;
             ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
 
             while (resultSet.next()) {
-                return new Movie(
+                Director director = new Director(
+                    resultSet.getInt("director_index"),
+                    resultSet.getString("director_id"), 
+                    resultSet.getString("director_name"),
+                    resultSet.getInt("director_birthyear"),
+                    resultSet.getInt("director_deathyear")
+                );
+
+                Movie movie = new Movie(
                     resultSet.getInt("id"),
                     resultSet.getString("imdb_id"),
                     resultSet.getString("title"),
                     resultSet.getInt("year"),
-                    resultSet.getInt("runtime"),
-                    resultSet.getString("director_id")
+                    resultSet.getInt("runtime")
                 );
+
+                
+                movie.setDirector(director);
+                
+                System.out.println(movie);
+                return movie;
             }
         } catch (Exception e) {
             System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
@@ -79,7 +102,7 @@ public class MovieRepositoryImpl implements MovieRepository {
                 movie.getImage(),
                 movie.getRuntime(),
                 movie.getDescription(),
-                movie.getDirectorId()
+                movie.getDirector().getImdb_id()
             ));
 
             return result;
@@ -102,12 +125,10 @@ public class MovieRepositoryImpl implements MovieRepository {
                 movie.getImage(),
                 movie.getRuntime(),
                 movie.getDescription(),
-                movie.getDirectorId(),
+                movie.getDirector().getImdb_id(),
 
                 movie.getId() // where clause
             ));
-
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + movie);
 
             return (result >= 1) ? true : false; 
         } catch (Exception e) {
@@ -150,8 +171,7 @@ public class MovieRepositoryImpl implements MovieRepository {
                         resultSet.getString("imdb_id"),
                         resultSet.getString("title"),
                         resultSet.getInt("year"),
-                        resultSet.getInt("runtime"),
-                        resultSet.getString("director_id")
+                        resultSet.getInt("runtime")
                     )
                 );
             }
@@ -166,32 +186,6 @@ public class MovieRepositoryImpl implements MovieRepository {
     public List<Movie> getTopMovies(int limit) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTopMovies'");
-    }
-
-    @Override
-    public Movie getByIdWithDirectorName(int movieId) {
-        try {
-            String sql = "SELECT m.*, d.id as dir_id, d.imdb_id as dir_imdb_id, d.name as dir_name, d.birthYear as dir_birthYear, d.deathYear as dir_deathYear FROM movies m join directors d on m.director_id = d.imdb_id where (m.id = ?)";
-            ResultSet resultSet = DBUtil.select(connection, sql, List.of(movieId));
-
-            while (resultSet.next()) {
-                System.out.println("Director name: " + resultSet.getString("dir_name"));
-
-                return new Movie(
-                    resultSet.getInt("id"),
-                    resultSet.getString("imdb_id"),
-                    resultSet.getString("title"),
-                    resultSet.getInt("year"),
-                    resultSet.getInt("runtime"),
-                    resultSet.getString("director_id")
-                );
-            }
-        } catch (Exception e) {
-            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
-            throw new RuntimeException();
-        }
-
-        throw new RuntimeException();
     }
 
     @Override

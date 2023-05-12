@@ -32,22 +32,22 @@ public class MovieController {
         model.addAttribute("movie", this.movieService.getById(movieId));
         model.addAttribute("allActors", this.actorService.getAll());
         model.addAttribute("movieActors", this.actorService.getActoresByMovieId(movieId));
-        model.addAttribute("director", this.movieService.getDirectorByMovieId(movieId));
+        model.addAttribute("director", this.movieService.getById(movieId).getDirector());
         model.addAttribute("allDirectors", this.directorService.getAll());
         return "movie";
     }
 
     @PostMapping("/delete")
     public String deleteMovieById(HttpServletRequest httpServletRequest) {
-        String id = httpServletRequest.getParameter("id");
-        movieService.deleteMovie(Integer.parseInt(id));
+        /*String id = httpServletRequest.getParameter("id");
+        movieService.deleteMovie(Integer.parseInt(id));*/
 
         return "redirect:/";
     }
 
     @PostMapping("/update")
     public String updateMovieById(HttpServletRequest httpServletRequest) {
-        int id = Integer.parseInt(httpServletRequest.getParameter("id"));
+        /*int id = Integer.parseInt(httpServletRequest.getParameter("id"));
         String imdbId = httpServletRequest.getParameter("imdbId");
         String title = httpServletRequest.getParameter("title");
         int year = Integer.parseInt(httpServletRequest.getParameter("year"));
@@ -56,13 +56,13 @@ public class MovieController {
         String directorImdbId = httpServletRequest.getParameter("directorImdbId");
         String[] actors = httpServletRequest.getParameterValues("actors");
 
-        Movie updatedMovie = new Movie(id, imdbId, title, year, runtime, directorImdbId);
+        Movie updatedMovie = new Movie(id, imdbId, title, year, runtime);
         movieService.updateMovie(updatedMovie);
 
         for (String actorId : actors) {
             System.out.println(actorId);
-        }
+        }*/
 
-        return "redirect:/movie/" + id;
+        return "redirect:/movie/" + 1;
     }
 }

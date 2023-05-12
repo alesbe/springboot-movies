@@ -14,6 +14,5 @@ public interface MovieService {
     public List<Movie> getPaginatedMovies();
     public List<Movie> getSortedByYear();
     public List<Movie> getTopMovies(int limit);
-    public Movie getByIdWithDirectorName(int movieId);
     public Director getDirectorByMovieId(int movieId);
 }

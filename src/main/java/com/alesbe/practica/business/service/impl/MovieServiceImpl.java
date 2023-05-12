@@ -56,11 +56,6 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getByIdWithDirectorName(int movieId) {
-        return this.repository.getByIdWithDirectorName(movieId);
-    }
-
-    @Override
     public Director getDirectorByMovieId(int movieId) {
         return this.repository.getDirectorByMovieId(movieId);
     }

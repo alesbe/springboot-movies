@@ -1,5 +1,7 @@
 package com.alesbe.practica.business.entity;
 
+import java.util.Objects;
+
 public class Actor {
     int id;
     String imdbId;
@@ -59,5 +61,13 @@ public class Actor {
     public String toString() {
         return "Actor [id=" + id + ", imdbId=" + imdbId + ", name=" + name + ", birthYear=" + birthYear + ", deathYear="
                 + deathYear + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return Objects.equals(imdbId, actor.imdbId);
     }
 }

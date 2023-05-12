@@ -8,10 +8,9 @@ public class Movie {
     String image;
     int runtime;
     String description;
-    String directorId;
+    Director director;
     
-    public Movie(int id, String imdbId, String title, int year, String image, int runtime, String description,
-            String directorId) {
+    public Movie(int id, String imdbId, String title, int year, String image, int runtime, String description) {
         this.id = id;
         this.imdbId = imdbId;
         this.title = title;
@@ -19,10 +18,9 @@ public class Movie {
         this.image = image;
         this.runtime = runtime;
         this.description = description;
-        this.directorId = directorId;
     }
 
-    public Movie(int id, String imdbId, String title, int year, int runtime, String directorId) {
+    public Movie(int id, String imdbId, String title, int year, int runtime) {
         this.id = id;
         this.imdbId = imdbId;
         this.title = title;
@@ -30,7 +28,6 @@ public class Movie {
         this.image = null;
         this.runtime = runtime;
         this.description = null;
-        this.directorId = directorId;
     }
 
     public int getId() {
@@ -89,17 +86,17 @@ public class Movie {
         this.description = description;
     }
 
-    public String getDirectorId() {
-        return directorId;
+    public Director getDirector() {
+        return director;
     }
 
-    public void setDirectorId(String directorId) {
-        this.directorId = directorId;
+    public void setDirector(Director director) {
+        this.director = director;
     }
 
     @Override
     public String toString() {
         return "Movie [id=" + id + ", imdbId=" + imdbId + ", title=" + title + ", year=" + year + ", image=" + image
-                + ", runtime=" + runtime + ", description=" + description + ", directorId=" + directorId + "]";
+                + ", runtime=" + runtime + ", description=" + description + ", director=" + director + "]";
     }
 }
