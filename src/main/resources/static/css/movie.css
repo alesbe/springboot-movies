@@ -2,6 +2,6 @@ body {
     padding: 1rem;
 }
 
-select {
+.multiple_selector {
     height: 20rem;
 }

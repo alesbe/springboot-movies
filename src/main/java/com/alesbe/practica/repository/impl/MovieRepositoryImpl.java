@@ -93,6 +93,7 @@ public class MovieRepositoryImpl implements MovieRepository {
     public boolean updateMovie(Movie movie) {
         try {
             String sql = "UPDATE movies set id = ?, imdb_id = ?, title = ?, year = ?, image = ?, runtime = ?, description = ?, director_id = ? WHERE (id = ?)";
+            System.out.println("MI PELI ESTA AQUI: " + movie);
             int result = DBUtil.update(connection, sql, Arrays.asList(
                 movie.getId(),
                 movie.getImdbId(),
@@ -105,6 +106,8 @@ public class MovieRepositoryImpl implements MovieRepository {
 
                 movie.getId() // where clause
             ));
+
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: " + movie);
 
             return (result >= 1) ? true : false; 
         } catch (Exception e) {

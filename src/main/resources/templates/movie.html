@@ -18,11 +18,18 @@
         <div><b>IMDB id: </b><input th:name="imdbId" th:value="${movie.getImdbId()}"></input></div>
         <div><b>Año: </b><input th:name="year" th:value="${movie.getYear()}"></input></div>
         <div><b>Minutos: </b><input th:name="runtime" th:value="${movie.getRuntime()}"></input><span></span></div>
-        <div><b>Nombre del director: </b><input th:name="name" th:value="${director.getName()}"></input></div>
+        
+        <input th:name="directorImdbId" th:value="${director.getImdb_id()}" style="display: none;">
+        <div>
+            <b>Nombre del director: </b>
+            <select class="selector" th:name="directorImdbId" required>
+                <option th:each="director,i : ${allDirectors}" th:value="${director.getImdb_id()}" th:text="${director.getName()}"></option>
+            </select>
+        </div>
 
         <h2>Actores</h2>
-        <select class="selector"  th:name="actors" multiple required>
-            <option th:each="actor,i : ${allActors}" th:value="${actor.getId()}" th:text="${actor.getName()}" th:selected="${movieActors.contains(actor)}"></option>
+        <select class="multiple_selector"  th:name="actors" multiple required>
+            <option th:each="actor,i : ${allActors}" th:value="${actor.getId()}" th:text="${actor.getName()}" th:selected="(${movieActors.contains(actor)})"></option>
         </select>
         <hr>
 
