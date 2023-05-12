@@ -34,9 +34,10 @@ public class MovieController {
 
     @PostMapping("/delete")
     public String deleteMovieById(HttpServletRequest httpServletRequest) {
-        
+        String id = httpServletRequest.getParameter("id");
+        movieService.deleteMovie(Integer.parseInt(id));
 
-        return "redirect:/movie/" + 1;
+        return "redirect:/";
     }
 
     @PostMapping("/update")

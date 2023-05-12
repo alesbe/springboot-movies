@@ -14,7 +14,8 @@
 
     <form action="/movie" method="post">
         <input th:name="id" th:value="${movie.getId()}" style="display: none;">
-        <div><b>IMDB id: </b><input th:name="title" th:value="${movie.getTitle()}"></input></div>
+        <div><b>Titulo: </b><input th:name="title" th:value="${movie.getTitle()}"></input></div>
+        <div><b>IMDB id: </b><input th:name="imdbId" th:value="${movie.getImdbId()}"></input></div>
         <div><b>Año: </b><input th:name="year" th:value="${movie.getYear()}"></input></div>
         <div><b>Minutos: </b><input th:name="runtime" th:value="${movie.getRuntime()}"></input><span></span></div>
         <div><b>Nombre del director: </b><input th:name="name" th:value="${director.getName()}"></input></div>
