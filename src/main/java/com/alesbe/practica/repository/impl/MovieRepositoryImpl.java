@@ -43,6 +43,32 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
+    public List<Movie> getAllSorted() {
+        List<Movie> allMovies = new ArrayList<>();
+        
+        try {
+            String sql = "SELECT * FROM movies ORDER BY year;";
+
+            ResultSet resultSet = DBUtil.select(connection, sql, null);
+            while (resultSet.next()) {
+                allMovies.add(
+                    new Movie(
+                        resultSet.getInt("id"),
+                        resultSet.getString("imdb_id"),
+                        resultSet.getString("title"),
+                        resultSet.getInt("year"),
+                        resultSet.getInt("runtime")
+                    )
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
+        }
+        
+        return allMovies;
+    }
+
+    @Override
     public Movie getById(int movieId) {
         try {
             //String sql = "SELECT * FROM movies WHERE (id = ?)";

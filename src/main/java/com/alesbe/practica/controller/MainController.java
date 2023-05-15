@@ -21,4 +21,11 @@ public class MainController {
         model.addAttribute("movies", allMovies);
         return "index";
     }
+
+    @GetMapping("/sorted")
+    public String sortByTitle(Model model) {
+        List<Movie> allMovies = this.movieService.getAllSorted();
+        model.addAttribute("movies", allMovies);
+        return "index";
+    }
 }

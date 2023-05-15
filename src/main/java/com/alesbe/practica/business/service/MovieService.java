@@ -8,6 +8,7 @@ import com.alesbe.practica.business.entity.Movie;
 
 public interface MovieService {
     public List<Movie> getAll();
+    public List<Movie> getAllSorted();
     public Movie getById(int movieId);
     public boolean insertMovie(Movie movie);
     public boolean updateMovie(Movie movie);

@@ -9,7 +9,10 @@
 </head>
 <body>
     <h1 class="m-2">Lista de peliculas</h1>
-    <a type="button" class="btn btn-success m-2" href="/movie/new">Añadir pelicula</a>
+    <div>
+        <a type="button" class="btn btn-success m-2" href="/movie/new">Añadir pelicula</a>
+        <a type="button" class="btn btn-warning m-1" href="/sorted">Ordenar por año</a>
+    </div>
     <ul>
         <li th:each="movie,i : ${movies}">
             <a th:text="${movie.getTitle()}" th:href="@{${'/movie/' + movie.getId()}}"></a>

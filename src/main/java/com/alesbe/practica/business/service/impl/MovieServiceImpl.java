@@ -19,6 +19,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public List<Movie> getAllSorted() {
+        return this.repository.getAllSorted();
+    }
+
+    @Override
     public Movie getById(int movieId) {
         return this.repository.getById(movieId);
     }
