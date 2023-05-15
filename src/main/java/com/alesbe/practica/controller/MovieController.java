@@ -70,8 +70,6 @@ public class MovieController {
             );
         }
 
-        // TODO: id es null. hay que hacer que pille la id de la pelicula recien añadida. tiene que ser autoincementable (a una malas trampearlo)
-
         // Update movie
         Movie newMovie = new Movie(id, imdbId, title, year, runtime);
         newMovie.setDirector(this.directorService.getById(directorId));
@@ -127,7 +125,7 @@ public class MovieController {
                 this.actorService.getActorById(Integer.parseInt(actorId))
             );
         }
-
+        
         // Update movie
         Movie updatedMovie = new Movie(id, imdbId, title, year, runtime);
         updatedMovie.setDirector(this.directorService.getById(directorId));

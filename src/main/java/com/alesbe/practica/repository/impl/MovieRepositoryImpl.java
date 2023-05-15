@@ -166,6 +166,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         // 2.- Insert actors in a for loop until all actors are filled. Get first movieImdbId using movieId.
         for (Actor actor : actors) {
             try {
+                System.out.println("INSERTING INTO MOVIEID: " + movieImdbId + " ACTOR: " + actor.getImdbId());
                 String sql = "INSERT INTO actors_movies (movie_id, actor_id) VALUES (?, ?);";
                 boolean result = DBUtil.insert(connection, sql, Arrays.asList(movieImdbId, actor.getImdbId()));
     
