@@ -77,9 +77,9 @@ public class MovieController {
         this.movieService.insertMovie(newMovie);
 
         // Update actors
-        this.movieService.updateMovieActors(id, newActors);
+        this.movieService.updateMovieActors(imdbId, newActors);
 
-        return "redirect:/movie/" + id;
+        return "redirect:/";
     }
 
     @GetMapping("{movieId}")
@@ -125,7 +125,7 @@ public class MovieController {
                 this.actorService.getActorById(Integer.parseInt(actorId))
             );
         }
-        
+
         // Update movie
         Movie updatedMovie = new Movie(id, imdbId, title, year, runtime);
         updatedMovie.setDirector(this.directorService.getById(directorId));
@@ -133,7 +133,7 @@ public class MovieController {
         this.movieService.updateMovie(updatedMovie);
 
         // Update actors
-        this.movieService.updateMovieActors(id, updatedActors);
+        this.movieService.updateMovieActors(imdbId, updatedActors);
 
         return "redirect:/movie/" + id;
     }

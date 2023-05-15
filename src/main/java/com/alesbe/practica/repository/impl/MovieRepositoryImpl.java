@@ -92,15 +92,12 @@ public class MovieRepositoryImpl implements MovieRepository {
     @Override
     public boolean insertMovie(Movie movie) {
         try {
-            String sql = "INSERT into imdb.movies VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO movies (imdb_id, title, year, runtime, director_id) VALUES (?, ?, ?, ?, ?)";
             boolean result = DBUtil.insert(connection, sql, Arrays.asList(
-                movie.getId(),
                 movie.getImdbId(),
                 movie.getTitle(),
                 movie.getYear(),
-                movie.getImage(),
                 movie.getRuntime(),
-                movie.getDescription(),
                 movie.getDirector().getImdb_id()
             ));
 
@@ -150,25 +147,22 @@ public class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public boolean updateMovieActors(int movieId, List<Actor> actors) {
-        String movieImdbId = this.getById(movieId).getImdbId();
-
+    public boolean updateMovieActors(String imdbId, List<Actor> actors) {
         // 1.- Get all actors_movies rows by movieId and delete them
         try {
             String sql = "DELETE FROM actors_movies WHERE (movie_id = ?)";
-            int result = DBUtil.delete(connection, sql, Arrays.asList(movieImdbId));
+            int result = DBUtil.delete(connection, sql, Arrays.asList(imdbId));
 
         } catch (Exception e) {
             System.out.println("[ERROR]: No se ha podido ejecutar la consulta");
             throw new RuntimeException();
         }
 
-        // 2.- Insert actors in a for loop until all actors are filled. Get first movieImdbId using movieId.
+        // 2.- Insert actors in a for loop until all actors are filled. Get first imdbId using movieId.
         for (Actor actor : actors) {
             try {
-                System.out.println("INSERTING INTO MOVIEID: " + movieImdbId + " ACTOR: " + actor.getImdbId());
                 String sql = "INSERT INTO actors_movies (movie_id, actor_id) VALUES (?, ?);";
-                boolean result = DBUtil.insert(connection, sql, Arrays.asList(movieImdbId, actor.getImdbId()));
+                boolean result = DBUtil.insert(connection, sql, Arrays.asList(imdbId, actor.getImdbId()));
     
             } catch (Exception e) {
                 System.out.println("[ERROR]: No se ha podido ejecutar la consulta");

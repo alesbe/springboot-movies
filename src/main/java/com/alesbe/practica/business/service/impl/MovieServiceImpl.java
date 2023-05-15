@@ -39,8 +39,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public boolean updateMovieActors(int movieId, List<Actor> actors) {
-        return this.repository.updateMovieActors(movieId, actors);
+    public boolean updateMovieActors(String imdbId, List<Actor> actors) {
+        return this.repository.updateMovieActors(imdbId, actors);
     }
 
     @Override

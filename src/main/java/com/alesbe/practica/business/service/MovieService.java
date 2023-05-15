@@ -12,7 +12,7 @@ public interface MovieService {
     public boolean insertMovie(Movie movie);
     public boolean updateMovie(Movie movie);
     public boolean deleteMovie(int movieId);
-    public boolean updateMovieActors(int movieId, List<Actor> actors);
+    public boolean updateMovieActors(String imdbId, List<Actor> actors);
     public List<Movie> getPaginatedMovies();
     public List<Movie> getSortedByYear();
     public List<Movie> getTopMovies(int limit);
